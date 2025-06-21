@@ -1,12 +1,27 @@
-import { add, sub, changestep } from './actions.js'
-import { createReducer } from '@reduxjs/toolkit'
+// import { add, sub, changestep } from './actions.js'
+import { createReducer, createSlice } from '@reduxjs/toolkit'
 
 const defaultcount = 0
 const defaultstep = 1
-export const countReducer = createReducer(defaultcount, (builder) => {
-  builder.addCase(add, (s, a) => s + a.payload)
-  builder.addCase(sub, (s, a) => s - a.payload)
+
+const countSlice = createSlice({
+  name: "count",
+  initialState: defaultcount,
+  reducers: {
+    add(s,a) { return s + a.payload },
+    sub(s,a) { return s - a.payload },
+  }
 })
-export const stepReducer = createReducer(defaultstep, (builder) => {
-  builder.addCase(changestep, (s, a) => a.payload)
+
+const stepSlice = createSlice({
+  name: "step",
+  initialState: defaultstep,
+  reducers: {
+    changestep(s,a) { return  a.payload },
+  }
 })
+
+export const { add, sub } = countSlice.actions
+export const { changestep } = stepSlice.actions
+export const countReducer = countSlice.reducer
+export const stepReducer = stepSlice.reducer
